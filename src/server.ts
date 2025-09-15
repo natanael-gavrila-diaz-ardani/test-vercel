@@ -12,7 +12,7 @@ import authRoutes from "./routes/auth.routes";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
 app.use(
     cors({
@@ -35,22 +35,35 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-const startServer = async () => {
+export default app;
+
+// const startServer = async () => {
+//   try {
+//     await sequelize.authenticate();
+//     console.log("📦 Database connected successfully\n");
+//
+//     await sequelize.sync({ alter: true });
+//     console.log("🗄️  Database synced\n");
+//
+//     app.listen(PORT, () => {
+//       console.log(`⚡ Server running on http://localhost:${PORT}\n`);
+//       console.log(`🔗 Health check: http://localhost:${PORT}/api/health\n`);
+//     });
+//   } catch (error) {
+//     console.error("❌ Failed to start server:", error);
+//     process.exit(1);
+//   }
+// };
+
+// startServer();
+(async () => {
   try {
     await sequelize.authenticate();
-    console.log("📦 Database connected successfully\n");
+    console.log("📦 Database connected successfully");
 
     await sequelize.sync({ alter: true });
-    console.log("🗄️  Database synced\n");
-
-    app.listen(PORT, () => {
-      console.log(`⚡ Server running on http://localhost:${PORT}\n`);
-      console.log(`🔗 Health check: http://localhost:${PORT}/api/health\n`);
-    });
+    console.log("🗄️ Database synced");
   } catch (error) {
-    console.error("❌ Failed to start server:", error);
-    process.exit(1);
+    console.error("❌ Failed to connect database:", error);
   }
-};
-
-startServer();
+})();
