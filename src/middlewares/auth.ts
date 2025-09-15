@@ -17,6 +17,8 @@ export const authMiddleware = (
 
     const token = authHeader.substring(7);
 
+    console.log("Incoming token:", token,"\n");
+
     if (token === "mock-token" && process.env.NODE_ENV === "development") {
       (req as any).user = {
         id: "mock-user-id",
@@ -30,7 +32,7 @@ export const authMiddleware = (
     (req as any).user = decoded;
     next();
   } catch (error) {
-    console.error("Auth middleware error:", error);
+    console.error("Auth middleware error:", error,"\n");
     res.status(401).json({ message: "Invalid token" });
   }
 };
